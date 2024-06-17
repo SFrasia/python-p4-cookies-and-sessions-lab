@@ -23,12 +23,16 @@ def clear_session():
 @app.route('/articles')
 def index_articles():
 
-    pass
+    session['page_views'] = session.get('page_views', 0)
+    if id not in index_articles:
+        return jsonify({'message': 'Article not found'}), 404
 
 @app.route('/articles/<int:id>')
 def show_article(id):
 
-    pass
+    session['page_views'] +=1
+    if session['page_views'] > 3:
+        return jsonify({'message': 'Maximum pageview limit reached'}), 401
 
 if __name__ == '__main__':
     app.run(port=5555)
